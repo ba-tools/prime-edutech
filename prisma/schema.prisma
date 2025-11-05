@@ -1,0 +1,105 @@
+// Prisma schema for Prime Edutech - AI Course Finder Tools
+// Database: Supabase (PostgreSQL)
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// User Profile Model
+model UserProfile {
+  id                String   @id @default(cuid())
+  name              String
+  phone             String
+  email             String?
+  lookingAs         String   // "self" | "parents" | "other"
+  levelOfStudy      String   // "masters" | "bachelors" | "diploma"
+  countries         String[] // Array of country names
+  fieldOfStudy      String   // "medical" | "engineering" | "law" | "science" | "arts" | "business"
+  programOfStudy    String
+  budget            Int      // In INR
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  // Relations
+  leads             Lead[]
+  courseInterests   CourseInterest[]
+  chatConversations ChatConversation[]
+  quizAttempts      QuizAttempt[]
+
+  @@index([email])
+  @@index([phone])
+}
+
+// Lead Model - Tracks user interactions with tools
+model Lead {
+  id              String   @id @default(cuid())
+  userProfile     UserProfile @relation(fields: [userProfileId], references: [id], onDelete: Cascade)
+  userProfileId   String
+  toolAccessed    String   // "course-finder" | "counsellor" | "scholarship-test"
+  action          String   // "expressed_interest" | "initiated_chat" | "completed_test"
+  actionData      Json?    // Tool-specific data
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@index([userProfileId])
+  @@index([toolAccessed])
+  @@index([createdAt])
+}
+
+// Course Interest Model - Track when users express interest in courses
+model CourseInterest {
+  id              String   @id @default(cuid())
+  userProfile     UserProfile @relation(fields: [userProfileId], references: [id], onDelete: Cascade)
+  userProfileId   String
+  courseId        String   // Reference to mock course data
+  courseName      String
+  universityName  String?
+  country         String?
+  createdAt       DateTime @default(now())
+
+  @@index([userProfileId])
+  @@index([courseId])
+}
+
+// Chat Conversation Model
+model ChatConversation {
+  id              String   @id @default(cuid())
+  userProfile     UserProfile @relation(fields: [userProfileId], references: [id], onDelete: Cascade)
+  userProfileId   String
+  messages        ChatMessage[]
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@index([userProfileId])
+}
+
+// Chat Message Model
+model ChatMessage {
+  id              String   @id @default(cuid())
+  conversation    ChatConversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  conversationId  String
+  role            String   // "user" | "assistant"
+  content         String   @db.Text
+  timestamp       DateTime @default(now())
+
+  @@index([conversationId])
+}
+
+// Quiz Attempt Model
+model QuizAttempt {
+  id              String   @id @default(cuid())
+  userProfile     UserProfile @relation(fields: [userProfileId], references: [id], onDelete: Cascade)
+  userProfileId   String
+  answers         Json     // Record<questionId, selectedOptionIndex>
+  score           Int
+  totalQuestions  Int
+  createdAt       DateTime @default(now())
+
+  @@index([userProfileId])
+}
