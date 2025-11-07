@@ -85,7 +85,7 @@ export function getFAQsByCategory(category: string): FAQ[] {
  */
 export function getAllFAQCategories(): string[] {
   const categories = new Set(
-    mbbsAbroadFAQs.map((faq) => faq.category).filter(Boolean)
+    mbbsAbroadFAQs.map((faq) => faq.category).filter((c): c is string => Boolean(c))
   );
   return Array.from(categories);
 }

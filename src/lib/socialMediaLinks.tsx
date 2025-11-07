@@ -4,6 +4,8 @@
  * Easily customizable for your business needs
  */
 
+import React from 'react';
+
 export interface SocialLink {
   id: string;
   name: string;
@@ -14,7 +16,7 @@ export interface SocialLink {
 }
 
 // Icons component (without React dependencies - just SVG strings)
-export const SocialIcons = {
+export const SocialIcons: Record<string, React.ReactNode> = {
   whatsapp: (
     <svg
       width="24"

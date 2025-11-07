@@ -19,7 +19,7 @@ export async function POST(request: NextRequest) {
       userProfile: UserProfile;
       toolAccessed: string;
       action: string;
-      actionData?: Record<string, any>;
+      actionData?: Record<string, unknown>;
     } = body;
 
     // Validate required fields

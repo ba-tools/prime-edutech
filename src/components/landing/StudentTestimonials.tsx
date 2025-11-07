@@ -181,7 +181,7 @@ export default function StudentTestimonials({
                         <Star
                           key={i}
                           className={`w-4 h-4 ${
-                            i < testimonial.rating
+                            i < testimonial.rating!
                               ? 'fill-yellow-400 text-yellow-400'
                               : 'text-gray-300'
                           }`}
@@ -192,7 +192,7 @@ export default function StudentTestimonials({
 
                   {/* Testimonial Text */}
                   <p className="text-gray-600 text-base leading-relaxed mb-6 flex-grow">
-                    "{testimonial.text}"
+                    &quot;{testimonial.text}&quot;
                   </p>
 
                   {/* Divider */}

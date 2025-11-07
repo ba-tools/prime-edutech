@@ -6,7 +6,6 @@ import { studyAbroadDestinations } from '@/lib/destinationData';
 import StudentTestimonials from '@/components/landing/StudentTestimonials';
 import { studentTestimonials } from '@/lib/testimonialsData';
 import ReadyToBegin from '@/components/landing/ReadyToBegin';
-import { defaultSocialLinks } from '@/lib/socialMediaLinks';
 import FAQSection from '@/components/landing/FAQ';
 import { mbbsAbroadFAQs } from '@/lib/faqData';
 import WhySection from '@/components/landing/Why';

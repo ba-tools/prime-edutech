@@ -24,7 +24,7 @@ export interface Lead {
   userProfile: UserProfile;
   toolAccessed: "course-finder" | "counsellor" | "scholarship-test";
   action: string; // e.g., "expressed_interest", "initiated_chat", "completed_test"
-  actionData?: Record<string, any>; // Tool-specific data
+  actionData?: Record<string, unknown>; // Tool-specific data
   createdAt?: Date;
   updatedAt?: Date;
 }

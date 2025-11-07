@@ -4,12 +4,6 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 
 export default function Solutions360() {
-  const fadeInUp = {
-    initial: { opacity: 0, y: 30 },
-    animate: { opacity: 1, y: 0 },
-    transition: { duration: 0.6 }
-  };
-
   return (
     <section className="relative min-h-screen px-4 overflow-hidden">
       <div className="container mx-auto rounded-3xl pt-8 md:pt-12 max-w-7xl bg-gradient-to-br from-blue-50 via-white to-blue-50">
@@ -47,7 +41,7 @@ export default function Solutions360() {
           >
             Access our full 360 Solutions, covering everything from application to arrival.
             Get instant language test vouchers, explore financial services, and invest in your
-            future with flexible student loans. It's all here.
+            future with flexible student loans. It&apos;s all here.
           </motion.p>
 
           {/* CTA Button */}

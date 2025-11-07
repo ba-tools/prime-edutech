@@ -92,7 +92,7 @@ export default function FAQSection({
               >
                 <div className="border-t border-gray-200 pt-6">
                   <h4 className="font-semibold text-gray-900 mb-2">
-                    Didn't find what you're looking for?
+                    Didn&apos;t find what you&apos;re looking for?
                   </h4>
                   <p className="text-sm text-gray-600 mb-4">
                     Get in touch with our expert counselors for personalized guidance.

@@ -205,11 +205,12 @@ export default function Hero() {
                 transition={el.transition}
               >
                 <div className="flex items-center gap-2 bg-white rounded-xl border border-zinc-200 shadow-sm px-2 py-2 w-48">
-                  <img
+                  <Image
                     src={`/assets/${el.img}`}
                     alt={el.text}
-                    className="border-2 border-green-200 rounded-full w-12 h-12 object-contain bg-white"
-                    style={{ background: 'white' }}
+                    width={48}
+                    height={48}
+                    className="border-2 border-green-200 rounded-full object-contain bg-white"
                   />
                   <span
                     className="block text-gray-800 font-semibold text-base"
