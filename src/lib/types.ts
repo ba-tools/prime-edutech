@@ -18,17 +18,6 @@ export interface UserProfile {
   updatedAt?: Date;
 }
 
-// Lead Types
-export interface Lead {
-  id?: string;
-  userProfile: UserProfile;
-  toolAccessed: "course-finder" | "counsellor" | "scholarship-test";
-  action: string; // e.g., "expressed_interest", "initiated_chat", "completed_test"
-  actionData?: Record<string, unknown>; // Tool-specific data
-  createdAt?: Date;
-  updatedAt?: Date;
-}
-
 // Course Types
 export interface Course {
   id: string;
@@ -91,14 +80,6 @@ export interface ChatMessage {
   timestamp: Date;
 }
 
-export interface ChatConversation {
-  id: string;
-  userProfile: UserProfile;
-  messages: ChatMessage[];
-  createdAt: Date;
-  updatedAt: Date;
-}
-
 // Quiz Types
 export interface QuizQuestion {
   id: string;
@@ -107,22 +88,4 @@ export interface QuizQuestion {
   correctAnswer: number;
   category: string;
   explanation?: string;
-}
-
-export interface QuizAttempt {
-  id?: string;
-  userProfile: UserProfile;
-  answers: Record<string, number>; // questionId -> selectedOptionIndex
-  score: number;
-  totalQuestions: number;
-  createdAt?: Date;
-}
-
-// Interest Tracking Types
-export interface CourseInterest {
-  id?: string;
-  userProfile: UserProfile;
-  courseId: string;
-  courseName: string;
-  createdAt?: Date;
 }
