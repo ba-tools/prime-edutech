@@ -44,8 +44,7 @@ export function OrbitingCircles({
           {
             "--duration": duration,
             "--radius": radius,
-            "--delay": -delay,
-            animationDelay: `${delay}s`,
+            animationDelay: `-${delay}s`, // Negative delay to start at different positions
           } as React.CSSProperties
         }
         className={cn(

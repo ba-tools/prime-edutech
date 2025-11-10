@@ -71,7 +71,7 @@ const DefaultOrbitingContent = () => (
     <OrbitingCircles
       className="size-[30px] border-none bg-transparent"
       duration={20}
-      delay={20}
+      delay={5}
       radius={80}
     >
       <WhatsAppIcon />
@@ -79,7 +79,7 @@ const DefaultOrbitingContent = () => (
     <OrbitingCircles
       className="size-[30px] border-none bg-transparent"
       duration={20}
-      delay={10}
+      delay={15}
       radius={80}
     >
       <MailIcon />
@@ -90,6 +90,7 @@ const DefaultOrbitingContent = () => (
       className="size-[50px] border-none bg-transparent"
       radius={190}
       duration={20}
+      delay={0}
       reverse
     >
       <GlobeIcon />
@@ -98,7 +99,7 @@ const DefaultOrbitingContent = () => (
       className="size-[50px] border-none bg-transparent"
       radius={190}
       duration={20}
-      delay={20}
+      delay={10}
       reverse
     >
       <BookIcon />
@@ -287,9 +288,9 @@ export default function ReadyToBegin({
           {/* Right Side - Orbiting Circles Animation */}
           {showOrbitingCircles && (
             <motion.div
-              initial={prefersReducedMotion ? {} : { opacity: 0, scale: 0.9 }}
-              whileInView={prefersReducedMotion ? {} : { opacity: 1, scale: 1 }}
-              transition={prefersReducedMotion ? {} : { duration: 0.6, delay: 0.2 }}
+              initial={prefersReducedMotion ? {} : { opacity: 0 }}
+              whileInView={prefersReducedMotion ? {} : { opacity: 1 }}
+              transition={prefersReducedMotion ? {} : { duration: 0.3 }}
               viewport={{ once: true }}
               className="relative h-[500px] w-full flex flex-col items-center justify-center overflow-hidden "
             >
