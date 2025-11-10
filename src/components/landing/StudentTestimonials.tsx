@@ -149,7 +149,7 @@ export default function StudentTestimonials({
           <p className="text-primary font-semibold text-sm md:text-base tracking-wider mb-4">
             SUCCESS STORIES
           </p>
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+          <h2 className="font-bold text-gray-900 mb-4" style={{ fontSize: 'clamp(2rem, 4.5vw, 3rem)' }}>
             {title}
           </h2>
           <p className="text-gray-600 text-base md:text-lg max-w-2xl mx-auto">
@@ -206,6 +206,7 @@ export default function StudentTestimonials({
                         src={testimonial.image}
                         alt={testimonial.studentName}
                         fill
+                        sizes="56px"
                         className="rounded-full object-cover border-2 border-primary/20"
                       />
                     </div>

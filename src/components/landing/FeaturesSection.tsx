@@ -37,7 +37,7 @@ export default function FeaturesSection() {
             </div>
 
             {/* Heading */}
-            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 md:mb-6 leading-tight">
+            <h2 className="font-bold mb-4 md:mb-6 leading-tight" style={{ fontSize: 'clamp(1.5rem, 4vw, 3rem)' }}>
               Find Your Perfect Study Program
             </h2>
 
@@ -82,6 +82,7 @@ export default function FeaturesSection() {
                     src="/assets/hero-2.png"
                     alt="Student with ipad"
                     fill
+                    sizes="(max-width: 1024px) 0px, 400px"
                     className="object-cover"
                   />
                 </div>
@@ -102,6 +103,7 @@ export default function FeaturesSection() {
                   src="/assets/hero-3.jpg"
                   alt="Students studying"
                   fill
+                  sizes="(max-width: 1024px) 0px, 200px"
                   className="object-cover"
                 />
               </div>

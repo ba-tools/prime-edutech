@@ -70,7 +70,7 @@ export default function StudyAbroadDestinations({
               <p className="text-primary font-semibold text-sm md:text-base tracking-wider mb-4">
                 INTERNATIONAL STUDIES
               </p>
-              <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+              <h2 className="font-bold text-gray-900 mb-4" style={{ fontSize: 'clamp(2rem, 4.5vw, 3rem)' }}>
                 {title}
               </h2>
               <p className="text-gray-600 text-base md:text-lg max-w-2xl">
@@ -114,7 +114,7 @@ export default function StudyAbroadDestinations({
               variants={itemVariants}
               className="group relative"
             >
-              <Link href={`#${destination.id}`}>
+              <Link href="#contact">
                 <div className="h-full p-6 md:p-8 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors duration-300 cursor-pointer border border-gray-100 hover:border-gray-200">
                   {/* Icon */}
                   <div className="flex items-start justify-between mb-6">

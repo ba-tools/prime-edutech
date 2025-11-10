@@ -83,6 +83,40 @@
   body {
     @apply bg-background text-foreground;
   }
+
+  /* Focus-visible styles for accessibility */
+  a:focus-visible,
+  button:focus-visible,
+  [role="button"]:focus-visible {
+    @apply outline-2 outline-offset-2 outline-primary;
+    outline-style: solid;
+  }
+
+  /* Remove default focus for mouse users, keep for keyboard users */
+  a:focus:not(:focus-visible),
+  button:focus:not(:focus-visible),
+  [role="button"]:focus:not(:focus-visible) {
+    outline: none;
+  }
+
+  /* Minimum tap target size for mobile (48x48px) */
+  button,
+  a {
+    min-width: 48px;
+    min-height: 48px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Exception for inline text links */
+  p a,
+  span a,
+  li a {
+    min-width: auto;
+    min-height: auto;
+    display: inline;
+  }
 }
 
 @theme inline {

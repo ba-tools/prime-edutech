@@ -119,28 +119,3 @@ export const studentTestimonials: Testimonial[] = [
     admissionYear: 2024,
   },
 ];
-
-/**
- * Helper function to get testimonials filtered by country
- * Example: getTestimonialsByCountry('Germany')
- */
-export function getTestimonialsByCountry(country: string): Testimonial[] {
-  return studentTestimonials.filter((t) => t.country === country);
-}
-
-/**
- * Helper function to get testimonials with high ratings
- * Example: getHighRatedTestimonials(4) // returns testimonials with 4+ stars
- */
-export function getHighRatedTestimonials(minRating: number = 4): Testimonial[] {
-  return studentTestimonials.filter((t) => (t.rating || 0) >= minRating);
-}
-
-/**
- * Helper function to get a random subset of testimonials
- * Useful for showing featured testimonials
- */
-export function getRandomTestimonials(count: number): Testimonial[] {
-  const shuffled = [...studentTestimonials].sort(() => Math.random() - 0.5);
-  return shuffled.slice(0, count);
-}

@@ -1,12 +1,14 @@
 import Link from "next/link";
 
+const CURRENT_YEAR = new Date().getFullYear();
+
 export default function PublicFooter() {
   return (
     <footer className="border-t bg-gray-50 mt-auto">
       <div className="container mx-auto px-4 py-8 md:py-12">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-6">
           <div className="sm:col-span-2 lg:col-span-1">
-            <h3 className="text-lg md:text-xl font-bold mb-3 md:mb-4">EduConsult</h3>
+            <h3 className="text-lg md:text-xl font-bold mb-3 md:mb-4">Prime Edutech</h3>
             <p className="text-sm md:text-base text-muted-foreground">
               Your trusted partner in international education consulting.
             </p>
@@ -75,7 +77,7 @@ export default function PublicFooter() {
         </div>
 
         <div className="border-t mt-6 md:mt-8 pt-6 md:pt-8 text-center text-xs md:text-sm text-muted-foreground">
-          <p>&copy; {new Date().getFullYear()} EduConsult. All rights reserved.</p>
+          <p>&copy; {CURRENT_YEAR} Prime Edutech. All rights reserved.</p>
         </div>
       </div>
     </footer>

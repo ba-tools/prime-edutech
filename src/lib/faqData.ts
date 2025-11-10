@@ -73,37 +73,6 @@ export const mbbsAbroadFAQs: FAQ[] = [
 ];
 
 /**
- * Helper function to get FAQs by category
- * Example: getFAQsByCategory('Eligibility')
- */
-export function getFAQsByCategory(category: string): FAQ[] {
-  return mbbsAbroadFAQs.filter((faq) => faq.category === category);
-}
-
-/**
- * Helper function to get all FAQ categories
- */
-export function getAllFAQCategories(): string[] {
-  const categories = new Set(
-    mbbsAbroadFAQs.map((faq) => faq.category).filter((c): c is string => Boolean(c))
-  );
-  return Array.from(categories);
-}
-
-/**
- * Helper function to search FAQs
- * Example: searchFAQs('cost')
- */
-export function searchFAQs(query: string): FAQ[] {
-  const lowerQuery = query.toLowerCase();
-  return mbbsAbroadFAQs.filter(
-    (faq) =>
-      faq.question.toLowerCase().includes(lowerQuery) ||
-      faq.answer.toLowerCase().includes(lowerQuery)
-  );
-}
-
-/**
  * Export all FAQs as default
  */
 export const faqs = mbbsAbroadFAQs;

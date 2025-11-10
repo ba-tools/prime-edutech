@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 
 export default function Solutions360() {
   return (
-    <section className="relative min-h-screen px-4 overflow-hidden">
+    <section className="relative px-4 overflow-hidden" style={{ paddingTop: 'clamp(3rem, 8vh, 6rem)', paddingBottom: 'clamp(3rem, 8vh, 6rem)' }}>
       <div className="container mx-auto rounded-3xl pt-8 md:pt-12 max-w-7xl bg-gradient-to-br from-blue-50 via-white to-blue-50">
 
         {/* Top Content Section */}
@@ -24,7 +24,8 @@ export default function Solutions360() {
 
           {/* Heading */}
           <motion.h1
-            className="text-3xl md:text-4xl font-bold text-gray-900 leading-tight px-4"
+            className="font-bold text-gray-900 leading-tight px-4"
+            style={{ fontSize: 'clamp(1.875rem, 4vw, 2.25rem)' }}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
@@ -73,8 +74,8 @@ export default function Solutions360() {
               alt="360 Solutions - Student services including scholarships, visa services, and foreign exchange"
               width={1920}
               height={1080}
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 1200px"
               className="w-full h-auto object-contain"
-              priority
               quality={95}
             />
           </div>

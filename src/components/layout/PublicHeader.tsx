@@ -21,6 +21,7 @@ import {
 } from "@/components/ui/navigation-menu";
 import { Menu } from "lucide-react";
 import { cn } from "@/lib/utils";
+import Image from "next/image";
 
 export default function PublicHeader() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -59,12 +60,7 @@ export default function PublicHeader() {
         <div className="flex items-center justify-between gap-4">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2 flex-shrink-0">
-            <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-lg">E</span>
-            </div>
-            <span className="hidden sm:inline text-lg md:text-xl font-bold text-primary">
-              EduConsult
-            </span>
+            <Image src="/assets/logo.png" alt="Prime Edutech" height={100} width={200} />
           </Link>
 
           {/* Desktop Navigation */}

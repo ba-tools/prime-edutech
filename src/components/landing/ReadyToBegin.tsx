@@ -4,6 +4,8 @@ import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { Mail, Phone } from 'lucide-react';
 import { OrbitingCircles } from '@/components/ui/orbiting-circles';
+import Image from 'next/image';
+import { useReducedMotion } from '@/hooks/useReducedMotion';
 
 interface SocialLink {
   id: string;
@@ -17,7 +19,6 @@ interface ReadyToBeginProps {
   title?: string;
   subtitle?: string;
   ctaButtonText?: string;
-  ctaButtonLink?: string;
   socialLinks?: SocialLink[];
   showOrbitingCircles?: boolean;
   orbitingContent?: React.ReactNode;
@@ -61,11 +62,9 @@ const defaultSocialLinks: SocialLink[] = [
 
 // Default orbiting circles content
 const DefaultOrbitingContent = () => (
-  <div className="relative flex h-full w-full flex-col items-center justify-center rounded-lg">
+  <div className="relative flex h-full w-full flex-col items-center justify-center">
     <div className="pointer-events-none whitespace-pre-wrap bg-gradient-to-b from-gray-900 to-gray-400 bg-clip-text text-center text-5xl md:text-6xl font-bold leading-none text-transparent dark:from-white dark:to-gray-600">
-      Begin Your
-      <br />
-      Journey
+      <Image src="/assets/icon.png" alt="Prime Edutech" height={64} width={64} sizes="64px" />
     </div>
 
     {/* Inner circles - smaller icons */}
@@ -165,33 +164,38 @@ export default function ReadyToBegin({
   title = 'Get Ready to Begin Your Journey',
   subtitle = 'Explore more, stay informed, and start your journey to academic excellence.',
   ctaButtonText = 'Start Now',
-  ctaButtonLink = '#contact',
   socialLinks = defaultSocialLinks,
   showOrbitingCircles = true,
   orbitingContent,
 }: ReadyToBeginProps) {
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.2,
-      },
-    },
-  };
+  const prefersReducedMotion = useReducedMotion();
 
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.5 },
-    },
-  };
+  const containerVariants = prefersReducedMotion
+    ? { hidden: {}, visible: {} }
+    : {
+        hidden: { opacity: 0 },
+        visible: {
+          opacity: 1,
+          transition: {
+            staggerChildren: 0.1,
+            delayChildren: 0.2,
+          },
+        },
+      };
+
+  const itemVariants = prefersReducedMotion
+    ? { hidden: {}, visible: {} }
+    : {
+        hidden: { opacity: 0, y: 20 },
+        visible: {
+          opacity: 1,
+          y: 0,
+          transition: { duration: 0.5 },
+        },
+      };
 
   return (
-    <section className="py-16 md:py-24 bg-white relative overflow-hidden">
+    <section id="contact" className="py-16 md:py-24 bg-white relative overflow-hidden">
       {/* Decorative background gradient */}
       <div className="absolute inset-0 -z-10">
         <div className="absolute top-0 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
@@ -210,7 +214,7 @@ export default function ReadyToBegin({
           >
             {/* Title */}
             <motion.div variants={itemVariants}>
-              <h2 className="text-4xl md:text-5xl font-bold text-gray-900 leading-tight">
+              <h2 className="font-bold text-gray-900 leading-tight" style={{ fontSize: 'clamp(2rem, 4.5vw, 3rem)' }}>
                 {title}
               </h2>
             </motion.div>
@@ -224,7 +228,7 @@ export default function ReadyToBegin({
 
             {/* CTA Button */}
             <motion.div variants={itemVariants}>
-              <Link href={ctaButtonLink}>
+              <Link href="https://wa.me/917667432929" target="_blank" rel="noopener noreferrer">
                 <button className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-primary to-indigo-700 text-white rounded-xl font-semibold shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
                   {ctaButtonText}
                   <svg
@@ -283,11 +287,11 @@ export default function ReadyToBegin({
           {/* Right Side - Orbiting Circles Animation */}
           {showOrbitingCircles && (
             <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
+              initial={prefersReducedMotion ? {} : { opacity: 0, scale: 0.9 }}
+              whileInView={prefersReducedMotion ? {} : { opacity: 1, scale: 1 }}
+              transition={prefersReducedMotion ? {} : { duration: 0.6, delay: 0.2 }}
               viewport={{ once: true }}
-              className="relative h-[500px] w-full flex flex-col items-center justify-center overflow-hidden rounded-2xl border border-gray-200 bg-gradient-to-br from-gray-50 to-white shadow-xl"
+              className="relative h-[500px] w-full flex flex-col items-center justify-center overflow-hidden "
             >
               {orbitingContent || <DefaultOrbitingContent />}
             </motion.div>
