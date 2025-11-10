@@ -1,6 +1,7 @@
 import Link from "next/link";
 
-const CURRENT_YEAR = new Date().getFullYear();
+// Build-time constant - updates at build time, not runtime
+const CURRENT_YEAR = 2025;
 
 export default function PublicFooter() {
   return (
