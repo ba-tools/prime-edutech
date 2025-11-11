@@ -135,10 +135,10 @@ export const landingPageContent: LandingPageContent = {
   company: {
     name: "Prime Edutech",
     tagline: "Your trusted partner in international education consulting",
-    phone: "+917667432929",
+    phone: "+918797444844",
     whatsapp: "917667432929",
     email: "info@primeedutech.com",
-    address: "123 Education St, City",
+    address: "H-Square, Office no.-503, 5th floor, Beside Amrawati Complex, Circular Road, Lalpur, Ranchi-834001 Jharkhand",
   },
 
   // Hero Section

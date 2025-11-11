@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { BookOpen, Grid3x3, BarChart3 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { getAssetUrl } from "@/lib/assets";
 
 export default function FeaturesSection() {
   const features = [
@@ -79,7 +80,7 @@ export default function FeaturesSection() {
               <div className="col-span-2 row-span-2 relative">
                 <div className="relative w-full h-full rounded-3xl overflow-hidden bg-white">
                   <Image
-                    src="/assets/hero-2.png"
+                    src={getAssetUrl('/assets/hero-2.png')}
                     alt="Student with ipad"
                     fill
                     sizes="(max-width: 1024px) 0px, 400px"
@@ -100,7 +101,7 @@ export default function FeaturesSection() {
               {/* Student Image - Bottom Right */}
               <div className="col-span-1 relative rounded-3xl overflow-hidden">
                 <Image
-                  src="/assets/hero-3.jpg"
+                  src={getAssetUrl('/assets/hero-3.jpg')}
                   alt="Students studying"
                   fill
                   sizes="(max-width: 1024px) 0px, 200px"

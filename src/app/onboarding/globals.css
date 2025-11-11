@@ -1,0 +1,44 @@
+/* Responsive background styling for onboarding page */
+
+/* Mobile-first approach: default styles for mobile */
+@media (max-width: 768px) {
+  .onboarding-bg {
+    background-size: cover !important;
+    background-position: center center !important;
+    background-attachment: scroll !important; /* Fixed attachment can cause issues on mobile */
+  }
+}
+
+/* Tablet and larger screens */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .onboarding-bg {
+    background-size: cover !important;
+    background-position: center !important;
+    background-attachment: scroll !important;
+  }
+}
+
+/* Desktop screens */
+@media (min-width: 1025px) {
+  .onboarding-bg {
+    background-size: cover !important;
+    background-position: center !important;
+    background-attachment: fixed !important; /* Parallax effect on desktop */
+  }
+}
+
+/* Very large screens - ensure background covers */
+@media (min-width: 1920px) {
+  .onboarding-bg {
+    background-size: 100% auto !important;
+    background-position: center top !important;
+  }
+}
+
+/* Landscape mobile devices */
+@media (max-width: 768px) and (orientation: landscape) {
+  .onboarding-bg {
+    background-size: auto 100% !important;
+    background-position: center !important;
+  }
+}

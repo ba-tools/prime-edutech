@@ -70,9 +70,9 @@ export default function PublicFooter() {
           <div>
             <h4 className="text-sm md:text-base font-semibold mb-3 md:mb-4">Contact</h4>
             <ul className="space-y-2 text-sm md:text-base text-muted-foreground">
-              <li className="break-words">Email: info@educonsult.com</li>
-              <li>Phone: +1 234 567 8900</li>
-              <li>Address: 123 Education St, City</li>
+              <li className="break-words">Email: info@primeedutech.com</li>
+              <li>Phone: +91 8797444844</li>
+              <li>Address: H-Square, Office no.-503, 5th floor, Beside Amrawati Complex, Circular Road, Lalpur, Ranchi-834001 Jharkhand</li>
             </ul>
           </div>
         </div>

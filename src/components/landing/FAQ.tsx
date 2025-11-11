@@ -29,7 +29,7 @@ export default function FAQSection({
   description = 'Find answers to common questions about studying MBBS abroad and our services.',
   faqs,
   showContactCTA = true,
-  contactEmail = 'contact@educonsult.com',
+  contactEmail = 'contact@primeedutech.com',
 }: FAQSectionProps) {
   const containerVariants = {
     hidden: { opacity: 0 },

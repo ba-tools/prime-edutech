@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import { motion } from 'framer-motion';
+import { getAssetUrl } from '@/lib/assets';
 
 export default function Solutions360() {
   return (
@@ -70,7 +71,7 @@ export default function Solutions360() {
         >
           <div className="relative w-full">
             <Image
-              src="/assets/hero-4.png"
+              src={getAssetUrl('/assets/hero-4.png')}
               alt="360 Solutions - Student services including scholarships, visa services, and foreign exchange"
               width={1920}
               height={1080}

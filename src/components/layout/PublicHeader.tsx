@@ -22,6 +22,7 @@ import {
 import { Menu } from "lucide-react";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
+import { getAssetUrl } from "@/lib/assets";
 
 export default function PublicHeader() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -60,7 +61,7 @@ export default function PublicHeader() {
         <div className="flex items-center justify-between gap-4">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2 flex-shrink-0">
-            <Image src="/assets/logo.png" alt="Prime Edutech" height={100} width={200} />
+            <Image src={getAssetUrl('/assets/logo.png')} alt="Prime Edutech" height={100} width={200} />
           </Link>
 
           {/* Desktop Navigation */}
@@ -123,7 +124,7 @@ export default function PublicHeader() {
           </NavigationMenu>
 
           {/* Desktop Get Started Button */}
-          <Link href="/register" className="hidden md:block">
+          <Link href="/onboarding" className="hidden md:block">
             <ShimmerButton className="h-12 md:h-14 px-8 text-base md:text-lg">
               <span className="whitespace-nowrap">Get Started</span>
             </ShimmerButton>
@@ -131,7 +132,7 @@ export default function PublicHeader() {
 
           {/* Mobile: Get Started Button + Hamburger Menu */}
           <div className="flex md:hidden items-center gap-2 ml-auto">
-            <Link href="/register">
+            <Link href="/onboarding">
               <ShimmerButton className="h-12 px-6 text-base">
                 <span>Get Started</span>
               </ShimmerButton>

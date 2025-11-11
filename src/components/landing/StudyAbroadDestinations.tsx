@@ -114,7 +114,7 @@ export default function StudyAbroadDestinations({
               variants={itemVariants}
               className="group relative"
             >
-              <Link href="#contact">
+              <Link href="/onboarding">
                 <div className="h-full p-6 md:p-8 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors duration-300 cursor-pointer border border-gray-100 hover:border-gray-200">
                   {/* Icon */}
                   <div className="flex items-start justify-between mb-6">
