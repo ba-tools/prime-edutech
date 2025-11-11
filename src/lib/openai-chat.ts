@@ -5,6 +5,13 @@
 
 import OpenAI from 'openai';
 import { Lead } from './data-store';
+import {
+  ACCEPTABLE_EXAMPLES,
+  UNACCEPTABLE_EXAMPLES,
+  TOPIC_SUGGESTIONS,
+  REFUSAL_INDICATORS,
+  ON_TOPIC_INDICATORS,
+} from './chatbot-constants';
 
 // Initialize OpenAI client
 const openai = new OpenAI({
@@ -14,7 +21,7 @@ const openai = new OpenAI({
 const MODEL = process.env.OPENAI_CHAT_MODEL || 'gpt-4o-mini';
 
 /**
- * Generate system prompt with guardrails
+ * Generate system prompt with strict guardrails
  */
 export function generateSystemPrompt(
   lead: Lead,
@@ -35,17 +42,49 @@ export function generateSystemPrompt(
 **Knowledge Base Context:**
 ${knowledgeContext.length > 0 ? knowledgeContext.map((ctx, i) => `${i + 1}. ${ctx}`).join('\n\n') : 'No specific knowledge base documents found for this query.'}
 
-**Your Role & Guidelines:**
+**STRICT TOPIC BOUNDARIES - YOU MUST FOLLOW THESE:**
+
+✅ **ACCEPTABLE TOPICS (Answer these):**
+- Studying abroad (universities, programs, countries, rankings)
+- Admission requirements and application processes
+- Student visa and immigration procedures
+- Scholarships, financial aid, and education loans
+- Prime Edutech's services and consultancy offerings
+- Career prospects after studying abroad
+- Cost of living, tuition fees, and budgeting
+- Language tests (IELTS, TOEFL, PTE) and entrance exams (GRE, GMAT, SAT)
+- Accommodation and student life abroad
+
+❌ **UNACCEPTABLE TOPICS (You MUST refuse these):**
+- General education subject content (e.g., "Explain calculus", "What is photosynthesis?", "Solve this math problem")
+- Homework or academic tutoring unrelated to study abroad
+- Current events, politics, sports, entertainment
+- Programming, coding, or technical tutorials
+- Jokes, stories, poems, or creative writing
+- Personal advice unrelated to education
+- Any topic not directly related to studying abroad or Prime Edutech services
+
+**Examples of Acceptable Questions:**
+${ACCEPTABLE_EXAMPLES.map((ex, i) => `${i + 1}. "${ex}"`).join('\n')}
+
+**Examples of Questions You MUST Refuse:**
+${UNACCEPTABLE_EXAMPLES.map((ex, i) => `${i + 1}. "${ex}"`).join('\n')}
+
+**Your Response Guidelines:**
 1. You are a professional education counsellor specializing in international education
 2. Use the student's information above to provide personalized advice
 3. Reference the knowledge base context when relevant to provide accurate information
-4. Focus on: university selection, admission requirements, visa processes, scholarships, career prospects
-5. Always maintain a helpful, encouraging, and professional tone
-6. If asked about topics outside education consultancy, politely redirect to study abroad matters
-7. Never make up information - if you're unsure, say so and offer to research further
-8. Consider the student's budget when making recommendations
-9. Provide actionable next steps whenever possible
-10. Be empathetic and understanding of the stress of studying abroad
+4. Always maintain a helpful, encouraging, and professional tone
+5. Never make up information - if you're unsure, say so and offer to research further
+6. Consider the student's budget when making recommendations
+7. Provide actionable next steps whenever possible
+8. Be empathetic and understanding of the stress of studying abroad
+
+**CRITICAL: When asked an unacceptable question:**
+You MUST respond with:
+"${TOPIC_SUGGESTIONS}"
+
+Do NOT answer off-topic questions under any circumstances. Do NOT be lenient. Strictly enforce these boundaries.
 
 **Company Information:**
 - Prime Edutech
@@ -53,7 +92,48 @@ ${knowledgeContext.length > 0 ? knowledgeContext.map((ctx, i) => `${i + 1}. ${ct
 - Phone: +91 8797444844
 - Website: primeedutech.com
 
-Remember: Your goal is to guide ${lead.name} through their study abroad journey with accurate, helpful, and personalized advice.`;
+Remember: Your goal is to guide ${lead.name} through their study abroad journey with accurate, helpful, and personalized advice. Stay strictly within acceptable topics.`;
+}
+
+/**
+ * Validate if AI response stayed on-topic
+ * Returns { isValid: true } if response is acceptable
+ * Returns { isValid: false, reason: string } if off-topic
+ */
+export function validateResponse(response: string): { isValid: boolean; reason?: string } {
+  const lowerResponse = response.toLowerCase();
+
+  // Check if AI refused the query (good - means it's working)
+  const hasRefusalIndicator = REFUSAL_INDICATORS.some(indicator =>
+    lowerResponse.includes(indicator.toLowerCase())
+  );
+
+  if (hasRefusalIndicator) {
+    return { isValid: true }; // AI properly refused off-topic question
+  }
+
+  // Check if response is suspiciously short (likely off-topic or error)
+  if (response.length < 50) {
+    return {
+      isValid: false,
+      reason: 'Response too short - likely off-topic or incomplete',
+    };
+  }
+
+  // Check if response contains on-topic keywords
+  const hasOnTopicKeywords = ON_TOPIC_INDICATORS.some(keyword =>
+    lowerResponse.includes(keyword)
+  );
+
+  if (!hasOnTopicKeywords) {
+    return {
+      isValid: false,
+      reason: 'Response lacks study-abroad related keywords - likely off-topic',
+    };
+  }
+
+  // Passed all checks
+  return { isValid: true };
 }
 
 /**

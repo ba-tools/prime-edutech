@@ -6,7 +6,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getLeadBySessionId, getConversationBySessionId, addMessageToConversation } from '@/lib/data-store';
 import { searchDocuments } from '@/lib/pinecone';
-import { streamChatCompletion, buildConversationMessages } from '@/lib/openai-chat';
+import { streamChatCompletion, buildConversationMessages, validateResponse } from '@/lib/openai-chat';
+import { OFF_TOPIC_MESSAGE } from '@/lib/chatbot-constants';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -79,8 +80,27 @@ export async function POST(req: NextRequest) {
           },
           // On completion
           () => {
-            // Save assistant response
-            addMessageToConversation(sessionId, 'assistant', fullResponse);
+            // Validate the response to ensure it stayed on-topic
+            const validation = validateResponse(fullResponse);
+
+            if (!validation.isValid) {
+              // Response went off-topic, replace with helpful redirect
+              console.warn(`Off-topic response detected: ${validation.reason}`);
+              console.warn(`User query: ${message}`);
+              console.warn(`AI response (first 200 chars): ${fullResponse.slice(0, 200)}`);
+
+              // Save the off-topic message instead
+              addMessageToConversation(sessionId, 'assistant', OFF_TOPIC_MESSAGE);
+
+              // Note: We already streamed the bad response to the client
+              // In a production system, you might want to implement a way to
+              // "cancel" the stream and send the redirect message instead
+              // For now, the next message will save the correct redirect
+            } else {
+              // Valid response, save it
+              addMessageToConversation(sessionId, 'assistant', fullResponse);
+            }
+
             controller.enqueue(encoder.encode('data: [DONE]\n\n'));
             controller.close();
           },
