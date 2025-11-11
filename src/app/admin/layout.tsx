@@ -2,8 +2,10 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { LayoutDashboard, Users, MessageSquare, BookOpen, Menu, X } from 'lucide-react';
+import { getAssetUrl } from '@/lib/assets';
 
 const navigation = [
   { name: 'Dashboard', href: '/admin', icon: LayoutDashboard },
@@ -32,8 +34,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                 <Menu className="w-6 h-6" />
               )}
             </button>
-            <Link href="/" className="text-2xl font-bold text-primary">
-              Prime Edutech
+            <Link href="/" className="flex items-center gap-2 flex-shrink-0">
+              <Image src={getAssetUrl('/assets/logo.png')} alt="Prime Edutech" height={100} width={200} />
             </Link>
           </div>
           <div className="text-sm font-semibold bg-primary/10 text-primary px-3 py-1 rounded-full">

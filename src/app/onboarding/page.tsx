@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Check, ChevronRight, Gift, Award, Users, ChevronDown } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { getAssetUrl } from '@/lib/assets';
 import './globals.css';
 
@@ -230,8 +231,8 @@ export default function RequestCallbackPage() {
       {/* Header - Fixed */}
       <header className="bg-white/95 backdrop-blur-sm shadow-sm sticky top-0 z-50">
         <div className="container mx-auto px-4 py-4">
-          <Link href="/" className="text-2xl font-bold text-primary">
-            Prime Edutech
+          <Link href="/" className="flex items-center gap-2 flex-shrink-0">
+            <Image src={getAssetUrl('/assets/logo.png')} alt="Prime Edutech" height={100} width={200} />
           </Link>
         </div>
       </header>
@@ -636,8 +637,8 @@ function ConfirmationPage() {
       {/* Header */}
       <header className="bg-white shadow-sm">
         <div className="container mx-auto px-4 py-4">
-          <Link href="/" className="text-2xl font-bold text-primary">
-            Prime Edutech
+          <Link href="/" className="flex items-center gap-2 flex-shrink-0">
+            <Image src={getAssetUrl('/assets/logo.png')} alt="Prime Edutech" height={100} width={200} />
           </Link>
         </div>
       </header>

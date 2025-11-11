@@ -5,6 +5,8 @@ import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Send, Bot, User, Loader2 } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
+import { getAssetUrl } from '@/lib/assets';
 
 interface Message {
   role: 'user' | 'assistant';
@@ -162,8 +164,8 @@ export default function AICounsellorPage() {
       {/* Header */}
       <header className="bg-white shadow-sm border-b sticky top-0 z-10">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <Link href="/" className="text-2xl font-bold text-primary">
-            Prime Edutech
+          <Link href="/" className="flex items-center gap-2 flex-shrink-0">
+            <Image src={getAssetUrl('/assets/logo.png')} alt="Prime Edutech" height={100} width={200} />
           </Link>
           <div className="flex items-center gap-2">
             <Bot className="w-6 h-6 text-primary" />
