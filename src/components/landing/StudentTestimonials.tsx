@@ -3,6 +3,8 @@
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { Star } from 'lucide-react';
+import { useReducedMotion } from '@/hooks/useReducedMotion';
+import { containerVariants, itemVariants, fadeInDown, fadeInUp, standardViewport } from '@/lib/animations';
 
 interface Testimonial {
   id: string;
@@ -103,25 +105,7 @@ export default function StudentTestimonials({
   columns = 3,
   showRatings = true,
 }: StudentTestimonialsProps) {
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.2,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.5 },
-    },
-  };
+  const prefersReducedMotion = useReducedMotion();
 
   const getGridCols = () => {
     switch (columns) {
@@ -141,10 +125,10 @@ export default function StudentTestimonials({
         {/* Header */}
         <motion.div
           className="text-center mb-16"
-          initial={{ opacity: 0, y: -20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          viewport={{ once: true }}
+          variants={fadeInDown(prefersReducedMotion)}
+          initial="hidden"
+          whileInView="visible"
+          viewport={standardViewport}
         >
           <p className="text-primary font-semibold text-sm md:text-base tracking-wider mb-4">
             SUCCESS STORIES
@@ -160,15 +144,15 @@ export default function StudentTestimonials({
         {/* Testimonials Grid */}
         <motion.div
           className={`grid grid-cols-1 ${getGridCols()} lg:grid-cols-${columns} gap-8`}
-          variants={containerVariants}
+          variants={containerVariants(prefersReducedMotion)}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true }}
+          viewport={standardViewport}
         >
           {testimonials.map((testimonial) => (
             <motion.div
               key={testimonial.id}
-              variants={itemVariants}
+              variants={itemVariants(prefersReducedMotion)}
               className="group"
             >
               <div className="h-full flex flex-col bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-primary/20 overflow-hidden">
@@ -230,10 +214,10 @@ export default function StudentTestimonials({
         {/* CTA Section */}
         <motion.div
           className="text-center mt-16"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.3 }}
-          viewport={{ once: true }}
+          variants={fadeInUp(prefersReducedMotion, 0.3)}
+          initial="hidden"
+          whileInView="visible"
+          viewport={standardViewport}
         >
           <p className="text-gray-600 text-lg mb-6">
             Ready to become our next success story?

@@ -3,8 +3,12 @@
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { getAssetUrl } from '@/lib/assets';
+import { useReducedMotion } from '@/hooks/useReducedMotion';
+import { fadeInDown, fadeInUp, fadeIn, scaleIn, standardViewport, DELAYS } from '@/lib/animations';
 
 export default function Solutions360() {
+  const prefersReducedMotion = useReducedMotion();
+
   return (
     <section className="relative px-4 overflow-hidden" style={{ paddingTop: 'clamp(3rem, 8vh, 6rem)', paddingBottom: 'clamp(3rem, 8vh, 6rem)' }}>
       <div className="container mx-auto rounded-3xl pt-8 md:pt-12 max-w-7xl bg-gradient-to-br from-blue-50 via-white to-blue-50">
@@ -14,9 +18,10 @@ export default function Solutions360() {
 
           {/* Tag */}
           <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
+            variants={fadeInDown(prefersReducedMotion)}
+            initial="hidden"
+            whileInView="visible"
+            viewport={standardViewport}
           >
             <span className="inline-block text-blue-600 font-semibold text-sm md:text-base tracking-wider uppercase">
               360 SOLUTIONS
@@ -27,9 +32,10 @@ export default function Solutions360() {
           <motion.h1
             className="font-bold text-gray-900 leading-tight px-4"
             style={{ fontSize: 'clamp(1.875rem, 4vw, 2.25rem)' }}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
+            variants={fadeInUp(prefersReducedMotion, DELAYS.short)}
+            initial="hidden"
+            whileInView="visible"
+            viewport={standardViewport}
           >
             Find Every Solution, From Applications to Accommodations
           </motion.h1>
@@ -37,9 +43,10 @@ export default function Solutions360() {
           {/* Description */}
           <motion.p
             className="text-base md:text-lg lg:text-xl text-gray-600 leading-relaxed px-4"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            variants={fadeIn(prefersReducedMotion, DELAYS.medium)}
+            initial="hidden"
+            whileInView="visible"
+            viewport={standardViewport}
           >
             Access our full 360 Solutions, covering everything from application to arrival.
             Get instant language test vouchers, explore financial services, and invest in your
@@ -48,14 +55,15 @@ export default function Solutions360() {
 
           {/* CTA Button */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
+            variants={fadeInUp(prefersReducedMotion, DELAYS.long)}
+            initial="hidden"
+            whileInView="visible"
+            viewport={standardViewport}
           >
             <motion.button
               className="px-8 py-4 bg-blue-600 text-white rounded-lg font-semibold text-base md:text-lg shadow-lg hover:bg-blue-700 transition-colors duration-300"
-              whileHover={{ scale: 1.05, boxShadow: '0 20px 40px rgba(37, 99, 235, 0.3)' }}
-              whileTap={{ scale: 0.95 }}
+              whileHover={prefersReducedMotion ? {} : { scale: 1.05, boxShadow: '0 20px 40px rgba(37, 99, 235, 0.3)' }}
+              whileTap={prefersReducedMotion ? {} : { scale: 0.95 }}
             >
               Register Now
             </motion.button>
@@ -65,9 +73,10 @@ export default function Solutions360() {
         {/* Hero Image - Fully Responsive */}
         <motion.div
           className="relative w-full max-w-6xl mx-auto"
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
+          variants={scaleIn(prefersReducedMotion, DELAYS.long)}
+          initial="hidden"
+          whileInView="visible"
+          viewport={standardViewport}
         >
           <div className="relative w-full">
             <Image

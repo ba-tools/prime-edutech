@@ -133,6 +133,8 @@ function CustomSelect({
 export default function RequestCallbackPage() {
   const [currentStep, setCurrentStep] = useState(1);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [sessionId, setSessionId] = useState<string | null>(null);
   const [hasInteractedWithSlider, setHasInteractedWithSlider] = useState(false);
   const [formData, setFormData] = useState<FormData>({
     countries: [],
@@ -145,7 +147,7 @@ export default function RequestCallbackPage() {
     lookingFor: '',
   });
 
-  const handleNext = () => {
+  const handleNext = async () => {
     if (currentStep < TOTAL_STEPS) {
       const nextStep = currentStep + 1;
       setCurrentStep(nextStep);
@@ -155,7 +157,31 @@ export default function RequestCallbackPage() {
       }
     } else {
       // Submit form
-      setIsSubmitted(true);
+      setIsSubmitting(true);
+      try {
+        const response = await fetch('/api/leads', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(formData),
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to save lead');
+        }
+
+        const data = await response.json();
+        setSessionId(data.sessionId);
+
+        // Store sessionId in localStorage for chat page access
+        localStorage.setItem('ai-counsellor-session', data.sessionId);
+
+        setIsSubmitted(true);
+      } catch (error) {
+        console.error('Error submitting form:', error);
+        alert('Failed to submit form. Please try again.');
+      } finally {
+        setIsSubmitting(false);
+      }
     }
   };
 
@@ -185,7 +211,7 @@ export default function RequestCallbackPage() {
     }
   };
 
-  if (isSubmitted) {
+  if (isSubmitted && sessionId) {
     return <ConfirmationPage />;
   }
 
@@ -309,11 +335,11 @@ export default function RequestCallbackPage() {
               )}
               <button
                 onClick={handleNext}
-                disabled={!canProceed()}
+                disabled={!canProceed() || isSubmitting}
                 className="flex-1 flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-primary to-indigo-700 text-white rounded-lg font-semibold disabled:opacity-50 disabled:cursor-not-allowed hover:shadow-lg transition-all"
               >
-                {currentStep === TOTAL_STEPS ? 'Submit' : 'Continue'}
-                <ChevronRight className="w-5 h-5" />
+                {isSubmitting ? 'Submitting...' : currentStep === TOTAL_STEPS ? 'Submit' : 'Continue'}
+                {!isSubmitting && <ChevronRight className="w-5 h-5" />}
               </button>
             </div>
           </div>
@@ -695,12 +721,10 @@ function ConfirmationPage() {
             {/* CTA Buttons */}
             <div className="flex flex-col md:flex-row gap-4">
               <Link
-                href="https://wa.me/917667432929"
-                target="_blank"
-                rel="noopener noreferrer"
+                href="/ai-counsellor"
                 className="flex-1 px-8 py-4 bg-gradient-to-r from-primary to-indigo-700 text-white rounded-lg font-semibold text-center hover:shadow-xl transition-all"
               >
-                Live AI Counsellor
+                Chat with AI Counsellor
               </Link>
               <Link
                 href="/#contact"

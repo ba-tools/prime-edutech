@@ -7,6 +7,8 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion';
+import { useReducedMotion } from '@/hooks/useReducedMotion';
+import { containerVariants, itemVariants, fadeInLeft, fadeIn, standardViewport, DELAYS } from '@/lib/animations';
 
 interface FAQ {
   id: string;
@@ -31,25 +33,7 @@ export default function FAQSection({
   showContactCTA = true,
   contactEmail = 'contact@primeedutech.com',
 }: FAQSectionProps) {
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.2,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.5 },
-    },
-  };
+  const prefersReducedMotion = useReducedMotion();
 
   return (
     <section className="py-16 md:py-24 bg-gradient-to-b from-white to-gray-50">
@@ -58,10 +42,10 @@ export default function FAQSection({
           {/* Left Column - Static Content */}
           <motion.div
             className="lg:col-span-2 space-y-6"
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5 }}
-            viewport={{ once: true }}
+            variants={fadeInLeft(prefersReducedMotion)}
+            initial="hidden"
+            whileInView="visible"
+            viewport={standardViewport}
           >
             {/* Section Label */}
             <div>
@@ -85,10 +69,10 @@ export default function FAQSection({
             {showContactCTA && (
               <motion.div
                 className="pt-6 space-y-4"
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                transition={{ delay: 0.3 }}
-                viewport={{ once: true }}
+                variants={fadeIn(prefersReducedMotion, DELAYS.long)}
+                initial="hidden"
+                whileInView="visible"
+                viewport={standardViewport}
               >
                 <div className="border-t border-gray-200 pt-6">
                   <h4 className="font-semibold text-gray-900 mb-2">
@@ -146,16 +130,16 @@ export default function FAQSection({
           {/* Right Column - Accordion */}
           <motion.div
             className="lg:col-span-3"
-            variants={containerVariants}
+            variants={containerVariants(prefersReducedMotion)}
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true }}
+            viewport={standardViewport}
           >
             <Accordion type="single" collapsible className="w-full space-y-4">
               {faqs.map((faq, index) => (
                 <motion.div
                   key={faq.id}
-                  variants={itemVariants}
+                  variants={itemVariants(prefersReducedMotion)}
                 >
                   <AccordionItem
                     value={faq.id}

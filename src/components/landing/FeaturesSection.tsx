@@ -1,11 +1,15 @@
-"use client";
+'use client';
 
 import Image from "next/image";
 import { BookOpen, Grid3x3, BarChart3 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { getAssetUrl } from "@/lib/assets";
+import { motion } from 'framer-motion';
+import { useReducedMotion } from '@/hooks/useReducedMotion';
+import { fadeInDown, fadeInUp, fadeInLeft, standardViewport, DELAYS } from '@/lib/animations';
 
 export default function FeaturesSection() {
+  const prefersReducedMotion = useReducedMotion();
   const features = [
     {
       icon: BookOpen,
@@ -31,16 +35,16 @@ export default function FeaturesSection() {
           {/* Left Column - Content */}
           <div className="flex flex-col justify-center">
             {/* Tag */}
-            <div className="inline-flex w-fit mb-4 md:mb-6">
+            <motion.div variants={fadeInDown(prefersReducedMotion)} initial="hidden" whileInView="visible" viewport={standardViewport} className="inline-flex w-fit mb-4 md:mb-6">
               <span className="text-primary text-xs md:text-sm font-bold tracking-widest">
                 INTERNATIONAL STUDENTS
               </span>
-            </div>
+            </motion.div>
 
             {/* Heading */}
-            <h2 className="font-bold mb-4 md:mb-6 leading-tight" style={{ fontSize: 'clamp(1.5rem, 4vw, 3rem)' }}>
+            <motion.h2 variants={fadeInUp(prefersReducedMotion)} initial="hidden" whileInView="visible" viewport={standardViewport} className="font-bold mb-4 md:mb-6 leading-tight" style={{ fontSize: 'clamp(1.5rem, 4vw, 3rem)' }}>
               Find Your Perfect Study Program
-            </h2>
+            </motion.h2>
 
             {/* Description */}
             <p className="text-sm md:text-base lg:text-lg text-muted-foreground mb-8 md:mb-10">
@@ -48,7 +52,7 @@ export default function FeaturesSection() {
             </p>
 
             {/* Features List */}
-            <div className="space-y-6 mb-8 md:mb-10">
+            <motion.div variants={fadeInUp(prefersReducedMotion, DELAYS.short)} initial="hidden" whileInView="visible" viewport={standardViewport} className="space-y-6 mb-8 md:mb-10">
               {features.map((feature, index) => (
                 <div key={index} className="flex gap-4 md:gap-5">
                   <div className="flex-shrink-0">
@@ -63,18 +67,18 @@ export default function FeaturesSection() {
                   </div>
                 </div>
               ))}
-            </div>
+            </motion.div>
 
             {/* CTA Button */}
-            <div>
+            <motion.div variants={fadeInUp(prefersReducedMotion, DELAYS.medium)} initial="hidden" whileInView="visible" viewport={standardViewport}>
               <Button size="lg" className="h-10 md:h-12 text-sm md:text-base px-6 md:px-8 rounded-lg">
                 Try It Today
               </Button>
-            </div>
+            </motion.div>
           </div>
 
           {/* Right Column - Images and Stats */}
-          <div className="relative hidden lg:block">
+          <motion.div variants={fadeInLeft(prefersReducedMotion, DELAYS.short)} initial="hidden" whileInView="visible" viewport={standardViewport} className="relative hidden lg:block">
             <div className="grid grid-cols-3 gap-4 h-96 md:h-[28rem]">
               {/* Main Student Image - Left Column */}
               <div className="col-span-2 row-span-2 relative">
@@ -109,7 +113,7 @@ export default function FeaturesSection() {
                 />
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>
