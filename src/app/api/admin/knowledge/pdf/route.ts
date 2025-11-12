@@ -7,8 +7,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createKnowledgeSource, updateKnowledgeSourceVectorIds } from '@/lib/data-store';
 import { storeDocument } from '@/lib/pinecone';
 
-// eslint-disable-next-line @typescript-eslint/no-require-imports
-const pdfParse = require('pdf-parse');
+export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
 
 export async function POST(req: NextRequest) {
   try {
@@ -37,6 +37,9 @@ export async function POST(req: NextRequest) {
     // Extract text from PDF
     let pdfText: string;
     try {
+      // Dynamic import to avoid build-time issues on Vercel
+      // eslint-disable-next-line @typescript-eslint/no-require-imports
+      const pdfParse = require('pdf-parse');
       const data = await pdfParse(buffer);
       pdfText = data.text;
     } catch (error) {
